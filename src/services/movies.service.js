@@ -15,7 +15,6 @@ class MovieService {
 
       return movie;
     } catch (error) {
-      console.log(error.message);
       throw error;
     }
   }

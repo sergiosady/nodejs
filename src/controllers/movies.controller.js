@@ -2,8 +2,13 @@ import movieService from "../services/movies.service.js";
 
 class MovieController {
   create(req, res) {
-    const movie = movieService.create(req.body);
-    res.status(201).json(movie);
+    try {
+      const movie = movieService.create(req.body);
+      res.status(201).json(movie);
+    } catch (error) {
+      console.error(error.message);
+      res.status(409).json({ error: error.message });
+    }
   }
 
   findAll(req, res) {
