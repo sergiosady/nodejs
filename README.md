@@ -1,6 +1,7 @@
 # API — MOVIES
 
 API para criação de catálogo de filmes.
+Feita utilizando POO para aprendizado.
 
 ---
 
