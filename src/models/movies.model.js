@@ -6,7 +6,7 @@ export default class Movie {
     this.title = title || "Título Genérico";
     this.description = description || "Sem descrição";
     this.year = year || "Desconhecido";
-    this.genre = genre || null;
+    this.genre = genre || "Desconhecido";
     this.image = image || `${title}.img`;
     this.video = video || `${title}.mp4`;
   }

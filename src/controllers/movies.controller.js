@@ -12,7 +12,7 @@ class MovieController {
   }
 
   findAll(req, res) {
-    res.json(movieService.findAll());
+    res.json({ Filmes: movieService.findAll() });
   }
 
   findById(req, res) {
