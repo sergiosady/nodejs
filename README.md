@@ -42,15 +42,3 @@ http://localhost:3000/
 ```bash
 # Desenvolvimento
 npm run dev
-
-## Estrutura do projeto
-
-```
-src/
-├── config/       # Pasta de configurações de dependências
-├── controller/   # Controller para a API
-├── models/       # Estrutura de dados da entidade Movies
-└── routes/       # Rotas da aplicação
-└── services/     # Camada com regras de negócio aplicadas e um mock de banco de dados(movies = [])
-└── index.js      # Ponto de entrada / Middlewares aplicados
-```
