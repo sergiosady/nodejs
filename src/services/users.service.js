@@ -1,43 +1,33 @@
 import User from "../models/users.model.js";
+import usersRepository from "../repositories/users.repository.js";
+import { generateHash } from "../utils/hashprovider.js";
 
 class UsersService {
-  constructor() {
-    this.users = [];
-  }
+  async create(data) {
+    const hashedPassword = await generateHash(data.password);
 
-  create(data) {
-    const user = new User(data);
-    try {
-      this.users.push(user);
-
-      return user;
-    } catch (error) {
-      throw error;
-    }
+    const user = new User({ ...data, password: hashedPassword });
+    return usersRepository.create(user);
   }
 
   findAll() {
-    return this.users;
+    return usersRepository.findAll();
   }
 
   findById(id) {
-    return this.users.find((user) => user.id === id);
+    return usersRepository.findById(id);
   }
 
-  update(id, data) {
-    const user = this.findById(id);
-    if (!user) return null;
+  async update(id, data) {
+    if (data.password) {
+      data.password = await generateHash(data.password);
+    }
 
-    Object.assign(user, data);
-    return user;
+    return usersRepository.update(id, data);
   }
 
   delete(id) {
-    const index = this.users.findIndex((user) => user.id === id);
-    if (index === -1) return false;
-
-    this.users.splice(index, 1);
-    return true;
+    return usersRepository.delete(id);
   }
 }
 
