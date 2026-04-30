@@ -1,47 +1,36 @@
 import Movie from "../models/movies.model.js";
+import moviesRepository from "../repositories/movies.repository.js";
 
-class MovieService {
-  constructor() {
-    this.movies = [];
-  }
-
+class MoviesService {
   create(data) {
     const movie = new Movie(data);
     try {
-      if (this.movies.some((mov) => mov.title === movie.title)) {
+      if (
+        moviesRepository.findAll().some((movie) => movie.title === movie.title)
+      ) {
         throw new Error("Title already in use.");
       }
-      this.movies.push(movie);
-
-      return movie;
+      return moviesRepository.create(movie);
     } catch (error) {
       throw error;
     }
   }
 
   findAll() {
-    return this.movies;
+    return moviesRepository.findAll();
   }
 
   findById(id) {
-    return this.movies.find((movie) => movie.id === id);
+    return moviesRepository.findById(id);
   }
 
   update(id, data) {
-    const movie = this.findById(id);
-    if (!movie) return null;
-
-    Object.assign(movie, data);
-    return movie;
+    return moviesRepository.update(id, data);
   }
 
   delete(id) {
-    const index = this.movies.findIndex((movie) => movie.id === id);
-    if (index === -1) return false;
-
-    this.movies.splice(index, 1);
-    return true;
+    return moviesRepository.delete(id);
   }
 }
 
-export default new MovieService();
+export default new MoviesService();
