@@ -1,9 +1,9 @@
-import movieService from "../services/movies.service.js";
+import moviesService from "../services/movies.service.js";
 
-class MovieController {
+class MoviesController {
   create(req, res) {
     try {
-      const movie = movieService.create(req.body);
+      const movie = moviesService.create(req.body);
       res.status(201).json(movie);
     } catch (error) {
       console.error(error.message);
@@ -12,11 +12,11 @@ class MovieController {
   }
 
   findAll(req, res) {
-    res.json({ Filmes: movieService.findAll() });
+    res.json({ Filmes: moviesService.findAll() });
   }
 
   findById(req, res) {
-    const movie = movieService.findById(req.params.id);
+    const movie = moviesService.findById(req.params.id);
 
     if (!movie) {
       return res.status(404).json({ error: "Not found" });
@@ -26,7 +26,7 @@ class MovieController {
   }
 
   update(req, res) {
-    const movie = movieService.update(req.params.id, req.body);
+    const movie = moviesService.update(req.params.id, req.body);
 
     if (!movie) {
       return res.status(404).json({ error: "Not found" });
@@ -36,7 +36,7 @@ class MovieController {
   }
 
   delete(req, res) {
-    const success = movieService.delete(req.params.id);
+    const success = moviesService.delete(req.params.id);
 
     if (!success) {
       return res.status(404).json({ error: "Not found" });
@@ -46,4 +46,4 @@ class MovieController {
   }
 }
 
-export default new MovieController();
+export default new MoviesController();

@@ -3,11 +3,12 @@
   "main": "index.js",
   "dependencies": {
     "express": "^5.2.1",
+    "mongoose": "^9.6.0",
     "nodemon": "^3.1.14",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui": "^5.32.2",
     "swagger-ui-express": "^5.0.1",
-    "uuid": "^13.0.0"
+    "uuid": "^14.0.0"
   },
   "scripts": {
     "dev": "nodemon src/index.js"

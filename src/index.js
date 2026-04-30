@@ -2,6 +2,7 @@ import express from "express";
 import router from "./routes/index.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
+import mongoose from "./config/database.js";
 
 const app = express();
 const PORT = 3000;
@@ -15,5 +16,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server up at port: ${PORT}`);
+  console.log(`Server up @ http://localhost:${PORT}`);
 });

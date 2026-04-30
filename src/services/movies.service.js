@@ -1,6 +1,6 @@
 import Movie from "../models/movies.model.js";
 
-class MovieService {
+class MoviesService {
   constructor() {
     this.movies = [];
   }
@@ -44,4 +44,4 @@ class MovieService {
   }
 }
 
-export default new MovieService();
+export default new MoviesService();
