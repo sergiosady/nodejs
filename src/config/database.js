@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+import "dotenv/config";
 
-mongoose.connect(
-  "mongodb+srv://sergiosady:jbeRUgHQSj5y9DkP@clustersimulador.dgpxx2e.mongodb.net/simulador?appName=ClusterSimulador",
-);
+const mongoDb = process.env.DB_CONN_STRING;
+
+mongoose.connect(mongoDb);
 
 mongoose.connection.on("connected", () => {
   console.log("Connected to database successfully");
