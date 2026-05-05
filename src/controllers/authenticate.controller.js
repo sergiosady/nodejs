@@ -22,7 +22,7 @@ export default async function login(req, res) {
     return res.status(400).json(authError);
   }
 
-  const token = jwt.sign({ user }, "c714d659dbd91a4e3969a4fdd527464d", {
+  const token = jwt.sign({ user }, "", {
     expiresIn: "1h",
   });
 
