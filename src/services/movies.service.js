@@ -1,4 +1,4 @@
-import Movie from "../models/movies.model.js";
+import Movie from "../models/movie.model.js";
 
 class MoviesService {
   constructor() {

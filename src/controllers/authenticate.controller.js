@@ -1,4 +1,4 @@
-import usersRepository from "../repositories/users.repository.js";
+import User from "../models/user.model.js";
 import { compareHash } from "../utils/hashProvider.js";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
@@ -12,9 +12,7 @@ const authError = {
 
 export default async function login(req, res) {
   const { email, password } = req.body;
-  const user = await usersRepository
-    .findAll()
-    .find((user) => user.email === email);
+  const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
     return res.status(400).json(authError);
@@ -25,9 +23,15 @@ export default async function login(req, res) {
     return res.status(400).json(authError);
   }
 
+  // CRIAÇÃO DE ASSINATURA / JWT SECRET
   const token = jwt.sign({ user }, secret, {
     expiresIn: "1h",
   });
 
-  return res.status(200).json({ ...user, token }); // Mescla o token dentro da propriedade user(não adiciona como uma propriedade separada)
+  return res.status(200).json({
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    token,
+  });
 }

@@ -4,45 +4,46 @@ class UsersController {
   async create(req, res) {
     try {
       const user = await usersService.create(req.body);
-      res.status(201).json(user);
+      return res.status(201).json(user);
     } catch (error) {
       console.error(error.message);
-      res.status(409).json({ error: error.message });
+      return res.status(409).json({ error: error.message });
     }
   }
 
-  findAll(req, res) {
-    res.json({ Users: usersService.findAll() });
+  async findAll(req, res) {
+    const users = await usersService.findAll();
+    return res.json({ Users: users });
   }
 
-  findById(req, res) {
-    const user = usersService.findById(req.params.id);
+  async findById(req, res) {
+    const user = await usersService.findById(req.params.id);
 
     if (!user) {
       return res.status(404).json({ error: "Not found" });
     }
 
-    res.json(user);
+    return res.json(user);
   }
 
-  update(req, res) {
-    const user = usersService.update(req.params.id, req.body);
+  async update(req, res) {
+    const user = await usersService.update(req.params.id, req.body);
 
     if (!user) {
       return res.status(404).json({ error: "Not found" });
     }
 
-    res.json(user);
+    return res.status(200).json(user);
   }
 
-  delete(req, res) {
-    const success = usersService.delete(req.params.id);
+  async delete(req, res) {
+    const success = await usersService.delete(req.params.id);
 
     if (!success) {
       return res.status(404).json({ error: "Not found" });
     }
 
-    res.status(204).send();
+    return res.status(204).send();
   }
 }
 

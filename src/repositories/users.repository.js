@@ -1,34 +1,42 @@
+import mongoose from "mongoose";
+import User from "../models/user.model.js";
+
 class UsersRepository {
-  constructor() {
-    this.users = [];
+  async create(user) {
+    const newUser = new User(user);
+
+    await newUser.save();
+    return newUser;
   }
 
-  create(user) {
-    this.users.push(user);
+  async findAll() {
+    const result = await User.find();
+
+    return result;
+  }
+
+  async findById(id) {
+    const user = await User.findById(id);
+
     return user;
   }
 
-  findAll() {
-    return this.users;
-  }
+  async update(id, data) {
+    const user = await User.findByIdAndUpdate(id, data, {
+      returnDocument: "after",
+    });
 
-  findById(id) {
-    return this.users.find((user) => user.id === id);
-  }
-
-  update(id, data) {
-    const user = this.findById(id);
-    if (!user) return null;
-
-    Object.assign(user, data);
+    if (!user) {
+      return null;
+    }
     return user;
   }
 
-  delete(id) {
-    const index = this.users.findIndex((user) => user.id === id);
-    if (index === -1) return false;
+  async delete(id) {
+    const user = await User.findByIdAndDelete(id, { returnDocument: "after" });
+    if (!user) return false;
 
-    this.users.splice(index, 1);
+    console.info("Deleted user:", user.id);
     return true;
   }
 }
