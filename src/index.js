@@ -1,18 +1,15 @@
 import express from "express";
 import router from "./routes/index.js";
-import swaggerUi from "swagger-ui-express";
-import swaggerSpec from "./config/swagger.js";
 import mongoose from "./config/database.js";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(router);
-app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/", (req, res) => {
-  res.redirect("/swagger");
+  res.json("API is running");
 });
 
 app.listen(PORT, () => {

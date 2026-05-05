@@ -4,7 +4,7 @@ class MoviesController {
   create(req, res) {
     try {
       const movie = moviesService.create(req.body);
-      res.status(201).json(movie);
+      res.status(201).json([movie, req.user]);
     } catch (error) {
       console.error(error.message);
       res.status(409).json({ error: error.message });
@@ -32,7 +32,7 @@ class MoviesController {
       return res.status(404).json({ error: "Not found" });
     }
 
-    res.json(movie);
+    res.json([movie, req.user]);
   }
 
   delete(req, res) {

@@ -9,9 +9,6 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.6.0",
     "nodemon": "^3.1.14",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui": "^5.32.2",
-    "swagger-ui-express": "^5.0.1",
     "uuid": "^14.0.0"
   },
   "scripts": {
