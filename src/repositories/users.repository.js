@@ -33,7 +33,7 @@ class UsersRepository {
   }
 
   async delete(id) {
-    const user = await User.findByIdAndDelete(id, { returnDocument: "after" });
+    const user = await User.findByIdAndDelete(id);
     if (!user) return false;
 
     console.info("Deleted user:", user.id);
