@@ -12,7 +12,7 @@ class UsersController {
   }
 
   findAll(req, res) {
-    res.json({ Usuários: usersService.findAll() });
+    res.json({ Users: usersService.findAll() });
   }
 
   findById(req, res) {

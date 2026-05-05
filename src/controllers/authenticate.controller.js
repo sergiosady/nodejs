@@ -1,6 +1,9 @@
 import usersRepository from "../repositories/users.repository.js";
 import { compareHash } from "../utils/hashProvider.js";
+import "dotenv/config";
 import jwt from "jsonwebtoken";
+
+const secret = process.env.JWT_SECRET;
 
 const authError = {
   error: "@authenticate/login",
@@ -22,7 +25,7 @@ export default async function login(req, res) {
     return res.status(400).json(authError);
   }
 
-  const token = jwt.sign({ user }, "c714d659dbd91a4e3969a4fdd527464d", {
+  const token = jwt.sign({ user }, secret, {
     expiresIn: "1h",
   });
 
