@@ -1,48 +1,49 @@
 import moviesService from "../services/movies.service.js";
 
 class MoviesController {
-  create(req, res) {
+  async create(req, res) {
     try {
-      const movie = moviesService.create(req.body);
-      res.status(201).json([movie, req.user]);
+      const movie = await moviesService.create(req.body);
+      res.status(201).json(movie);
     } catch (error) {
-      console.error(error.message);
-      res.status(409).json({ error: error.message });
+      return res.status(400).json({ message: error.message });
     }
   }
 
-  findAll(req, res) {
-    res.json({ Movies: moviesService.findAll() });
+  async findAll(req, res) {
+    try {
+      const movies = await moviesService.findAll();
+      return res.json({ Movies: movies });
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
   }
 
-  findById(req, res) {
-    const movie = moviesService.findById(req.params.id);
-
-    if (!movie) {
-      return res.status(404).json({ error: "Not found" });
+  async findById(req, res) {
+    try {
+      const movie = await moviesService.findById(req.params.id);
+      return res.status(200).json(movie);
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
     }
-
-    res.json(movie);
   }
 
-  update(req, res) {
-    const movie = moviesService.update(req.params.id, req.body);
-
-    if (!movie) {
-      return res.status(404).json({ error: "Not found" });
+  async update(req, res) {
+    try {
+      const movie = await moviesService.update(req.params.id, req.body);
+      return res.json(movie);
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
     }
-
-    res.json([movie, req.user]);
   }
 
-  delete(req, res) {
-    const success = moviesService.delete(req.params.id);
-
-    if (!success) {
-      return res.status(404).json({ error: "Not found" });
+  async delete(req, res) {
+    try {
+      const movie = await moviesService.delete(req.params.id);
+      return res.status(204).send();
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
     }
-
-    res.status(204).send();
   }
 }
 

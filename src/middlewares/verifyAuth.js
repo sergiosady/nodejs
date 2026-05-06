@@ -25,13 +25,10 @@ export default function verifyAuth(req, res, next) {
     return res.status(401).json(authorizationError);
   }
 
-  jwt.verify(token, jwtSecret, (error, decoded) => {
+  jwt.verify(token, jwtSecret, (error) => {
     if (error) {
       return res.status(401).json(authorizationError);
     }
-
-    req.user = decoded;
-
     return next();
   });
 }

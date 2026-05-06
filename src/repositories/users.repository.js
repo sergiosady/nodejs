@@ -4,8 +4,8 @@ import User from "../models/user.model.js";
 class UsersRepository {
   async create(user) {
     const newUser = new User(user);
-
     await newUser.save();
+
     return newUser;
   }
 
@@ -34,10 +34,7 @@ class UsersRepository {
 
   async delete(id) {
     const user = await User.findByIdAndDelete(id);
-    if (!user) return false;
-
-    console.info("Deleted user:", user.id);
-    return true;
+    return user;
   }
 }
 

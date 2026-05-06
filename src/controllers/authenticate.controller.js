@@ -12,7 +12,7 @@ const authError = {
 
 export default async function login(req, res) {
   const { email, password } = req.body;
-  const user = await User.findOne({ email }).select("+password"); // INCLUI O PASSWORD NO RETORNO(Mongoose não inclui por padrão)
+  const user = await User.findOne({ email }).select("+password"); // INCLUI O PASSWORD NO RETORNO PARA COMPARAR HASH
 
   if (!user) {
     return res.status(400).json(authError);
@@ -23,7 +23,6 @@ export default async function login(req, res) {
     return res.status(400).json(authError);
   }
 
-  // CRIAÇÃO DE ASSINATURA / JWT SECRET
   const token = jwt.sign({ user }, secret, {
     expiresIn: "1h",
   });

@@ -1,33 +1,52 @@
 import User from "../models/user.model.js";
 import usersRepository from "../repositories/users.repository.js";
-import { generateHash } from "../utils/hashprovider.js";
 
 class UsersService {
   async create(data) {
-    const hashedPassword = await generateHash(data.password);
-
-    const user = new User({ ...data, password: hashedPassword });
-    return await usersRepository.create(user);
+    try {
+      const user = await usersRepository.create(data);
+      return user;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async findAll() {
-    return await usersRepository.findAll();
+    const users = await usersRepository.findAll();
+    if (!users) {
+      throw new Error("Internal server error");
+    }
+    return users;
   }
 
   async findById(id) {
-    return await usersRepository.findById(id);
+    const user = await usersRepository.findById(id);
+    if (!user) {
+      throw new Error("Not found");
+    }
+    return user;
   }
 
   async update(id, data) {
-    if (data.password) {
-      data.password = await generateHash(data.password);
-    }
+    try {
+      const user = await usersRepository.update(id, data);
 
-    return await usersRepository.update(id, data);
+      if (!user) {
+        throw new Error("Not found");
+      }
+      return user;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async delete(id) {
-    return await usersRepository.delete(id);
+    const deletedUser = await usersRepository.delete(id);
+
+    if (!deletedUser) {
+      throw new Error("Not found");
+    }
+    return deletedUser;
   }
 }
 

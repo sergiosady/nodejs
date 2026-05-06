@@ -1,46 +1,59 @@
 import Movie from "../models/movie.model.js";
+import moviesRepository from "../repositories/movies.repository.js";
 
 class MoviesService {
-  constructor() {
-    this.movies = [];
-  }
-
-  create(data) {
-    const movie = new Movie(data);
+  async create(data) {
     try {
-      if (this.movies.some((mov) => mov.title === movie.title)) {
-        throw new Error("Title already in use.");
-      }
-      this.movies.push(movie);
-
-      return movie;
+      return await moviesRepository.create(data);
     } catch (error) {
+      if (error.code === 11000) {
+        throw new Error("Title already exists");
+      }
+      if (error.name === "ValidationError") {
+        throw new Error(error);
+      }
       throw error;
     }
   }
 
-  findAll() {
-    return this.movies;
-  }
-
-  findById(id) {
-    return this.movies.find((movie) => movie.id === id);
-  }
-
-  update(id, data) {
-    const movie = this.findById(id);
-    if (!movie) return null;
-
-    Object.assign(movie, data);
+  async findAll() {
+    const movie = await moviesRepository.findAll();
     return movie;
   }
 
-  delete(id) {
-    const index = this.movies.findIndex((movie) => movie.id === id);
-    if (index === -1) return false;
+  async findById(id) {
+    const movie = await moviesRepository.findById(id);
+    if (!movie) {
+      throw new Error("Not found");
+    }
+    return movie;
+  }
 
-    this.movies.splice(index, 1);
-    return true;
+  async update(id, data) {
+    try {
+      const movie = await moviesRepository.update(id, data);
+      if (!movie) {
+        throw new Error("Not found");
+      }
+      return movie;
+    } catch (error) {
+      if (error.code === 11000) {
+        throw new Error("Title already exists");
+      }
+      if (error.name === "ValidationError") {
+        throw new Error(error);
+      }
+      throw error;
+    }
+  }
+
+  async delete(id) {
+    const movie = await moviesRepository.findById(id);
+
+    if (!movie) {
+      throw new Error("Not found");
+    }
+    return await moviesRepository.delete(id);
   }
 }
 

@@ -6,44 +6,44 @@ class UsersController {
       const user = await usersService.create(req.body);
       return res.status(201).json(user);
     } catch (error) {
-      console.error(error.message);
-      return res.status(409).json({ error: error.message });
+      return res.status(400).json({ error: error.message });
     }
   }
 
   async findAll(req, res) {
-    const users = await usersService.findAll();
-    return res.json({ Users: users });
+    try {
+      const users = await usersService.findAll();
+      return res.status(200).json({ Users: users });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
   }
 
   async findById(req, res) {
-    const user = await usersService.findById(req.params.id);
-
-    if (!user) {
-      return res.status(404).json({ error: "Not found" });
+    try {
+      const user = await usersService.findById(req.params.id);
+      return res.json(user);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-
-    return res.json(user);
   }
 
   async update(req, res) {
-    const user = await usersService.update(req.params.id, req.body);
-
-    if (!user) {
-      return res.status(404).json({ error: "Not found" });
+    try {
+      const user = await usersService.update(req.params.id, req.body);
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-
-    return res.status(200).json(user);
   }
 
   async delete(req, res) {
-    const success = await usersService.delete(req.params.id);
-
-    if (!success) {
-      return res.status(404).json({ error: "Not found" });
+    try {
+      const success = await usersService.delete(req.params.id);
+      return res.status(204).send();
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-
-    return res.status(204).send();
   }
 }
 

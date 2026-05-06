@@ -2,26 +2,46 @@
 
 API para criação de catálogo de filmes
 com autenticação/autorização e persistência de dados.
-Feita utilizando POO para estudo.
+Feita utilizando, em partes, POO para estudo.
 
 ---
 
-### Como acessar
+### Pré-requisitos
 
-1. Baixe as dependências
-2. Configure o banco de dados para receber documentos users/movies(mongoDB)
-3. Preencha as variáveis de ambiente
-4. Teste a aplicação utilizando sua ferramente de escolha(Postman, Thunder Client, Insomnia)
-
-## Pré-requisitos
-
-- [Node.js](https://nodejs.org/) v18+ _(ou o runtime utilizado no projeto)_
+- Node.js v18+
 - MongoDB via Mongoose
 - Dependências instaladas
 
-## Executando a aplicação
+### Como acessar
 
-```bash
-# Desenvolvimento
-npm run dev
-```
+1. Clone o repositório
+2. Instale as dependências com o comando `npm install`
+3. Configure o seu banco de dados(mongoDB) para receber collections users e movies
+4. Adicione um index chamado _titleNormalized_ à collection movies no seu banco de dados(unique index)
+5. Preencha as variáveis de ambiente, a string de conexão do seu mongoose(mongoDB) e a secret para assinatura JWT
+6. Inicie a aplicação com o comando `npm run dev`
+7. Teste a aplicação utilizando sua ferramente de escolha(Postman, Thunder Client, Insomnia)
+8. Para fazer a autenticação após a criação de um user (POST /users `name, email, age, password`), utilize o endpoint POST /authenticate com `email, password`, gerando o JWT
+9. Agora você pode criar/alterar/deletar filmes no endpoint /movies utilizando o token no authorization header(`Bearer <jwt_gerado>`)
+
+## Endpoints
+
+### /users
+
+- `POST /users` - Cria um novo usuário
+- `GET /users` - Lista todos os usuários
+- `GET /users/:id` - Busca um usuário pelo ID
+- `PUT /users/:id` - Atualiza um usuário pelo ID
+- `DELETE /users/:id` - Deleta um usuário pelo ID
+
+### /authenticate
+
+- `POST /authenticate` - Realiza login e retorna um token JWT
+
+### /movies
+
+- `POST /movies` - Cria um novo filme
+- `GET /movies` - Lista todos os filmes
+- `GET /movies/:id` - Busca um filme pelo ID
+- `PUT /movies/:id` - Atualiza um filme pelo ID
+- `DELETE /movies/:id` - Deleta um filme pelo ID
