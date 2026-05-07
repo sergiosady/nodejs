@@ -17,12 +17,11 @@ Feita utilizando, em partes, POO para estudo.
 1. Clone o repositório
 2. Instale as dependências com o comando `npm install`
 3. Configure o seu banco de dados(mongoDB) para receber collections users e movies
-4. Adicione um index chamado _titleNormalized_ à collection movies no seu banco de dados(unique index)
-5. Preencha as variáveis de ambiente, a string de conexão do seu mongoose(mongoDB) e a secret para assinatura JWT
-6. Inicie a aplicação com o comando `npm run dev`
-7. Teste a aplicação utilizando sua ferramente de escolha(Postman, Thunder Client, Insomnia)
-8. Para fazer a autenticação após a criação de um user (POST /users `name, email, age, password`), utilize o endpoint POST /authenticate com `email, password`, gerando o JWT
-9. Agora você pode criar/alterar/deletar filmes no endpoint /movies utilizando o token no authorization header(`Bearer <jwt_gerado>`)
+4. Preencha as variáveis de ambiente, a string de conexão do seu mongoose(mongoDB) e a secret para assinatura JWT
+5. Inicie a aplicação com o comando `npm run dev`
+6. Teste a aplicação utilizando sua ferramente de escolha(Postman, Thunder Client, Insomnia)
+7. Para fazer a autenticação após a criação de um user (POST /users `name, email, age, password`), utilize o endpoint POST /authenticate com `email, password`, gerando o JWT
+8. Agora você pode criar/alterar/deletar filmes no endpoint /movies utilizando o token no authorization header(`Bearer <jwt_gerado>`)
 
 ## Endpoints
 
